@@ -8,23 +8,19 @@ package com.algs4.sort;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import com.algs4.sort.std.*;
 
-public class InsertionGuardEx24 {
+public class InsertionEx25 {
 
     public static void sort(Comparable[] a) {
         int N = a.length;
-        int min = 0;
-        // 筛选最小的元素放在0位置
-        for (int i = 0; i < N; i++) {
-            if (less(a[i], a[min])) {
-                min = i;
-            }
-        }
-        exch(a, 0, min);
         for (int i = 1; i < N; i++) {
-            for (int j = i; less(a[j], a[j - 1]); j--) {
-                exch(a, j, j - 1);
+            Comparable temp = a[i];
+            int j = i;
+            for (; j > 0 && less(temp, a[j - 1]); j--) {
+                a[j] = a[j - 1];
             }
+            a[j] = temp;
         }
     }
 
@@ -56,11 +52,13 @@ public class InsertionGuardEx24 {
 
 
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
+        Integer[] a = StdRandom2.generateRandomArray(10000, 0, 10000);
+        StdOut2.show(a);
         StopWatch watch = new StopWatch();
         sort(a);
-        StdOut.println("Insertion guard time =" + watch.elapsedTime() + "s");
+        double time = watch.elapsedTime();
+        StdOut.println("time = " + time);
         assert isSorted(a);
-        show(a);
+        StdOut2.show(a);
     }
 }
