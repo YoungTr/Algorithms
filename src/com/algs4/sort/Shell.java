@@ -6,13 +6,24 @@
 
 package com.algs4.sort;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Example {
+public class Shell {
 
     public static void sort(Comparable[] a) {
-
+        int N = a.length;
+        int h = 1;
+        while (h < N / 3) {
+            h = 3 * h + 1;
+        }
+        while (h >= 1) {
+            for (int i = h; i < N; i++) {
+                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
+                    exch(a, j, j - h);
+                }
+            }
+            h /= 3;
+        }
     }
 
     public static boolean less(Comparable v, Comparable m) {
@@ -43,7 +54,11 @@ public class Example {
 
 
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
+        Integer[] a = {
+                1, 3, 5, 62, 524, 72, 54, 57, 72, 41, 67, 17, 416, 86,
+                426, 789, 26, 95, 41, 61, 416, 8, 965, 41, 516, 89, 315,
+                80, 315, 90, 41, 567
+        };
         sort(a);
         assert isSorted(a);
         show(a);

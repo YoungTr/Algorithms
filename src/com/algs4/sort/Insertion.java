@@ -9,10 +9,15 @@ package com.algs4.sort;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Example {
+public class Insertion {
 
     public static void sort(Comparable[] a) {
-
+        int N = a.length;
+        for (int i = 1; i < N; i++) {
+            for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
+                exch(a, j, j - 1);
+            }
+        }
     }
 
     public static boolean less(Comparable v, Comparable m) {
@@ -44,7 +49,9 @@ public class Example {
 
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
+        StopWatch watch = new StopWatch();
         sort(a);
+        StdOut.println("Insertion time =" + watch.elapsedTime() + "s");
         assert isSorted(a);
         show(a);
     }
